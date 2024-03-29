@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.admin.qna.dao.QnaDAO">
+    <insert id="insert" parameterType="qna">
+		<selectKey keyProperty="qnaId" resultType="long" order="AFTER">
+			SELECT LAST_INSERT_ID() AS qnaId
+		</selectKey>
+		<![CDATA[
+			INSERT INTO 
+				QNA
+			(
+				TITLE, CONTENT, REG_DATE, LATEST_UPDATE_DATE, USER_ID, PRODUCT_CODE, IS_DELETED
+			)
+
+			VALUES
+
+			(
+				#{title}, #{content}, #{regDate}, #{latestUpdateDate}, #{userId}, #{productCode}, #{isDeleted}			
+			)
+		
+		]]>
+	</insert>
+</mapper>
