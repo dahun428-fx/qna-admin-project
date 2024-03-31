@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.admin.qna.dto.CreateQnaDTO;
 import com.admin.qna.dto.ReadQnaDTO;
+import com.admin.qna.dto.UpdateQnaDTO;
 import com.admin.qna.service.QnaService;
 
 import lombok.AllArgsConstructor;
@@ -18,15 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class QnaClientController {
-    
+
     private final QnaService qnaService;
 
     @GetMapping("/qna/{qnaId}")
@@ -35,7 +35,6 @@ public class QnaClientController {
         log.info("/qna ( get {} ) : {}", qnaId, found);
         return ResponseEntity.status(HttpStatus.OK).body(found);
     }
-    
 
     @PostMapping("/qna")
     public ResponseEntity<ReadQnaDTO> add(@RequestBody CreateQnaDTO entity) {
@@ -43,6 +42,11 @@ public class QnaClientController {
         log.info("/qna ( post ) : {}", saved);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(saved);
     }
-    
+
+    @PutMapping("/qna/{qnaId}")
+    public ResponseEntity<String> update(@PathVariable long qnaId, @RequestBody UpdateQnaDTO entity) {
+        // qnaService.modify(entity);
+        return ResponseEntity.status(HttpStatus.OK).body("Ok");
+    }
 
 }
