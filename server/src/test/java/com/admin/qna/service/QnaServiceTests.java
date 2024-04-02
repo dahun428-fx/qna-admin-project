@@ -16,13 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.admin.qna.dao.QnaDAO;
-import com.admin.qna.dto.CreateQnaDTO;
-import com.admin.qna.dto.ReadQnaDTO;
-import com.admin.qna.dto.UpdateQnaDTO;
+import com.admin.qna.app.qna.dao.QnaDAO;
+import com.admin.qna.app.qna.dto.CreateQnaDTO;
+import com.admin.qna.app.qna.dto.ReadQnaDTO;
+import com.admin.qna.app.qna.dto.UpdateQnaDTO;
+import com.admin.qna.app.qna.repository.QnaRepository;
 import com.admin.qna.models.Qna;
-import com.admin.qna.repository.QnaRepository;
 import com.admin.utils.ModelUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -117,9 +116,7 @@ public class QnaServiceTests {
         String title = "new title";
         String content = "new content";
         
-        UpdateQnaDTO dto = new UpdateQnaDTO();
-        dto.setTitle(title);
-        dto.setContent(content);
+        UpdateQnaDTO dto = new UpdateQnaDTO(title, content);
   
         foundQna.updateService(ModelUtil.map(dto, Qna.class));
         qnaRepository.save(foundQna);

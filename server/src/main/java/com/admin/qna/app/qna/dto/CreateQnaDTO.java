@@ -1,4 +1,4 @@
-package com.admin.qna.dto;
+package com.admin.qna.app.qna.dto;
 
 import lombok.Data;
 

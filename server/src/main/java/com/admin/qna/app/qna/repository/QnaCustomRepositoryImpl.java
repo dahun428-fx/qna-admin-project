@@ -1,4 +1,4 @@
-package com.admin.qna.repository;
+package com.admin.qna.app.qna.repository;
 
 public class QnaCustomRepositoryImpl implements QnaCustomRepository {
     @Override

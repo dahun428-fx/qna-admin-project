@@ -1,19 +1,15 @@
-package com.admin.qna.service;
+package com.admin.qna.app.qna.service;
 
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.admin.qna.dao.QnaDAO;
-import com.admin.qna.dto.CreateQnaDTO;
-import com.admin.qna.dto.ReadQnaDTO;
-import com.admin.qna.dto.UpdateQnaDTO;
+import com.admin.qna.app.qna.dao.QnaDAO;
+import com.admin.qna.app.qna.dto.CreateQnaDTO;
+import com.admin.qna.app.qna.dto.ReadQnaDTO;
+import com.admin.qna.app.qna.dto.UpdateQnaDTO;
+import com.admin.qna.app.qna.repository.QnaRepository;
 import com.admin.qna.models.Qna;
-import com.admin.qna.repository.QnaRepository;
 import com.admin.utils.ModelUtil;
-
 import lombok.AllArgsConstructor;
 
 @Service
@@ -58,8 +54,7 @@ public class QnaService {
      * update qna
      * @param dto
      */
-    public void modify(UpdateQnaDTO dto) {
-        long qnaId = dto.getQnaId();
+    public void modify(long qnaId, UpdateQnaDTO dto) {
         Qna foundQna = qnaRepository.findById(qnaId).orElseThrow(()-> new NoSuchElementException());
         foundQna.updateService(ModelUtil.map(dto, Qna.class));
         qnaRepository.save(foundQna);

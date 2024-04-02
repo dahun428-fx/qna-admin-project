@@ -1,4 +1,4 @@
-package com.admin.qna.dao;
+package com.admin.qna.app.qna.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,4 +1,4 @@
-package com.admin.qna.repository;
+package com.admin.qna.app.qna.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

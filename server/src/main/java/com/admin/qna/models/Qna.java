@@ -5,12 +5,14 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.hibernate.annotations.ColumnDefault;
-
+import org.hibernate.annotations.DynamicInsert;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +27,8 @@ import lombok.ToString;
 public class Qna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qna_id")
-    @Getter 
+    @Column(name = "qna_id", updatable = false)
+    @Getter
     private Long qnaId;
     @Column(nullable = false)
     @Getter @Setter
@@ -35,11 +37,11 @@ public class Qna {
     @Getter @Setter
     private String content;
     @Column(name = "reg_date", nullable = false, updatable = false)
-    @Getter 
-    private Timestamp regDate =  Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+    @Getter
+    private Timestamp regDate;
     @Column(name = "latest_update_date", nullable = false)
-    @Getter 
-    private Timestamp latestUpdateDate =  Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+    @Getter
+    private Timestamp latestUpdateDate;
     @Column(name = "user_id", nullable = false, updatable = false)
     @Getter @Setter
     private String userId;
@@ -48,25 +50,20 @@ public class Qna {
     private String productCode;
     @Column(name = "is_deleted", nullable = false)
     @ColumnDefault(value = "'N'")
+    @Getter @Setter
     private String isDeleted = "N";
 
-    // public Qna(String title, String content, String userId, String productCode) {
-    //     this.title = title;
-    //     this.content = content;
-    //     this.userId = userId;
-    //     this.productCode = productCode;
-    // }
-    // public Qna () {
-    //     if (this.regDate == null) {
-    //         this.regDate = Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-    //     }
-    //     if (this.latestUpdateDate == null) {
-    //         this.latestUpdateDate = Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-    //     }
-    //     if(this.isDeleted == null) {
-    //         this.isDeleted = "N";
-    //     }
-    // }
+    @PrePersist
+    public void setDate() {
+        this.regDate =  Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        this.latestUpdateDate = Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+    }
+
+    @PreUpdate
+    public void setLatestUpdateDate() {
+        this.latestUpdateDate = Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+    }
+
     public boolean isDeleted() {
         return this.isDeleted == "Y" ? true : false;
     }

@@ -1,10 +1,13 @@
-package com.admin.qna.dto;
+package com.admin.qna.app.qna.dto;
 
-import java.security.Timestamp;
-
+import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReadQnaDTO {
     private Long qnaId;
     private String title;

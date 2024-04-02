@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ModelUtil {
      public static <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         ModelMapper modelMapper = new ModelMapper();
@@ -17,5 +20,15 @@ public class ModelUtil {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper.map(source, targetClass);
+    }
+
+    public static <T> String toJSON(T data) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(data);
+    }
+
+    public static <T> T toObject(String contentAsString, Class<T> targetClass) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(contentAsString, targetClass);
     }
 }
