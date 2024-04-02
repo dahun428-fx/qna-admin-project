@@ -120,7 +120,7 @@ public class QnaServiceTests {
         UpdateQnaDTO dto = new UpdateQnaDTO();
         dto.setTitle(title);
         dto.setContent(content);
-
+  
         foundQna.updateService(ModelUtil.map(dto, Qna.class));
         qnaRepository.save(foundQna);
 
